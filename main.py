@@ -1,19 +1,20 @@
 import pygame as pg
-import config
-from carro import Carro
+import src.config as config
+from src.carro import Carro
 
 pg.init()
 
 def main():
     tela = pg.display.set_mode(config.TELA_TAMANHO)
     clock = pg.time.Clock()
-    fonte = pg.font.SysFont("Calibri", 10)
+    fonte = pg.font.SysFont("Calibri", 16)
     rodando = True
-
-    carro = Carro(440, 920)
-    roda_esquerda = roda_direita = False
+    pausado = False
+    debug = False
+    carro = None
 
     fundo_img = pg.image.load("imgs/fundo_teste.png").convert()
+    pausado_img = fonte.render("pausado", False, (255, 0, 0))
 
     while rodando:
         for e in pg.event.get():
@@ -21,25 +22,28 @@ def main():
                 pg.quit()
                 rodando = False
                 return
-            
-            elif e.type==pg.KEYDOWN:
-                if e.key==pg.K_a:
-                    roda_esquerda = True
-
-                elif e.key==pg.K_d:
-                    roda_direita = True
+        
             elif e.type==pg.KEYUP:
-                if e.key==pg.K_a:
-                    roda_esquerda = False
+                if e.key==pg.K_SPACE:
+                    pausado =  not pausado
+                elif e.key==pg.K_1:
+                    debug = not debug
 
-                elif e.key==pg.K_d:
-                    roda_direita = False
+            elif e.type==pg.MOUSEBUTTONUP:
+                carro = Carro(*pg.mouse.get_pos())
 
         tela.blit(fundo_img, (0, 0))
-        carro.update(roda_esquerda, roda_direita, tela)
+        if not pausado and carro:
+            carro.update(tela)
         
-
-        carro.render(tela)
+        if carro:
+            carro.render(tela)
+        
+        if carro and debug:
+            tela.blit(fonte.render(str(carro.seguidor.rodar_seguidor(carro.sensores)), False, (255, 0, 0)), (5, 5))
+        
+        if pausado:
+            tela.blit(pausado_img, (config.TELA_TAMANHO[0]//2-pausado_img.get_width()//2, 5))
         pg.display.update()
         clock.tick(config.FRAMERATE)
 
