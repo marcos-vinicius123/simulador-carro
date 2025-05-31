@@ -39,19 +39,19 @@ class Carro:
         
         
 
-    def update_sensores(self, tela):
+    def update_sensores(self, fundo):
         for i in range(len(self.sensores)):
             sensor_pos = pg.Vector2(self.roda1.x+(10+6*i)*math.cos(self.angulo), (self.roda1.y+(10+6*i)*math.sin(self.angulo)))
             try:
-                self.sensores[i] = tuple(tela.get_at((int(sensor_pos.x), int(sensor_pos.y))))[0]!=config.COR_FUNDO[0]
+                self.sensores[i] = tuple(fundo.get_at((int(sensor_pos.x), int(sensor_pos.y))))[0]!=config.COR_FUNDO[0]
             except:
                 self.sensores[i] = False
     
-    def render(self, tela):
-        pg.draw.line(tela, (100, 120, 100), (self.roda1.x, self.roda1.y), (self.roda2.x, self.roda2.y))
-        pg.draw.circle(tela, (120, 100, 100), (self.roda1.x, self.roda1.y), 5)
-        pg.draw.circle(tela, (120, 100, 100), (self.roda2.x, self.roda2.y), 5)
+    def render(self, tela, camera):
+        pg.draw.line(tela, (100, 120, 100), (self.roda1.x-camera.pos.x, self.roda1.y-camera.pos.y), (self.roda2.x-camera.pos.x, self.roda2.y-camera.pos.y))
+        pg.draw.circle(tela, (120, 100, 100), (self.roda1.x-camera.pos.x, self.roda1.y-camera.pos.y), 5)
+        pg.draw.circle(tela, (120, 100, 100), (self.roda2.x-camera.pos.x, self.roda2.y-camera.pos.y), 5)
 
         
         for i in range(len(self.sensores)):
-            pg.draw.circle(tela, (255* (not self.sensores[i]), self.sensores[i]*255, 0), (self.roda1.x+(10+6*i)*math.cos(self.angulo), (self.roda1.y+(10+6*i)*math.sin(self.angulo))), 2)
+            pg.draw.circle(tela, (255* (not self.sensores[i]), self.sensores[i]*255, 0), (self.roda1.x+(10+6*i)*math.cos(self.angulo)-camera.pos.x, self.roda1.y+(10+6*i)*math.sin(self.angulo)-camera.pos.y), 2)
