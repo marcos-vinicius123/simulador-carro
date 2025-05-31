@@ -4,7 +4,7 @@ import src.config as config
 from src.seguidor import Seguidor
 
 class Carro:
-    def __init__(self, x, y):
+    def __init__(self, x, y, kp, ki, kd):
         self.pos = pg.Vector2(x, y)
         self.angulo = 0
         self.roda1 = pg.Vector2(x-30, y)
@@ -12,7 +12,7 @@ class Carro:
         self.roda2 = pg.Vector2(x+30, y)
         self.vel2 = 0.05
         self.sensores = [False for _ in range(8)]
-        self.seguidor = Seguidor()
+        self.seguidor = Seguidor(kp, ki, kd)
     
     def update(self, tela):
         roda1 = pg.Vector2(self.roda1.x, self.roda1.y)
