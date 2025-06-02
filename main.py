@@ -1,11 +1,11 @@
 import pygame as pg
-import math, sys
+import math
 import src.config as config
 from src.evolutivo import Evolutivo
 from src.camera import Camera
 
 pg.init()
-sys.dont_write_bytecode = True
+pg.display.set_caption("simulador de carro")
 
 def main():
     tela = pg.display.set_mode(config.TELA_TAMANHO)
@@ -67,7 +67,6 @@ def main():
         
         if pausado:
             tela.blit(pausado_img, (config.TELA_TAMANHO[0]//2-pausado_img.get_width()//2, 5))
-            tela.blit(fonte.render(str(pg.mouse.get_rel()), 0, (255, 0, 0)), (5, 20))
         pg.display.update()
         clock.tick(config.FRAMERATE)
 

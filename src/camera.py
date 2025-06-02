@@ -6,17 +6,17 @@ class Camera:
         self.pos = pg.Vector2(x, y)
 
     
-    def seguir(self, pos, fundo):
+    def seguir(self, pos:pg.Vector2, fundo:pg.Surface):
         self.pos.x = pos.x-config.TELA_TAMANHO[0]//2
         self.pos.y = pos.y-config.TELA_TAMANHO[1]//2
         self.constrain(fundo)
     
-    def mover(self, x, y, fundo):
+    def mover(self, x:int, y:int, fundo:pg.Surface):
         self.pos.x += x
         self.pos.y += y
         self.constrain(fundo)
 
-    def constrain(self, fundo):
+    def constrain(self, fundo:pg.Surface):
         if self.pos.x<0:
             self.pos.x = 0
         

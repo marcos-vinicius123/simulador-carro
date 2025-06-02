@@ -4,7 +4,7 @@ import src.config as config
 from src.seguidor import Seguidor
 
 class Carro:
-    def __init__(self, x, y, kp, ki, kd):
+    def __init__(self, x:int, y:int, kp:float, ki:float, kd:float):
         self.pos = pg.Vector2(x, y)
         self.angulo = 0
         self.roda1 = pg.Vector2(x-30, y)
@@ -14,7 +14,7 @@ class Carro:
         self.sensores = [False for _ in range(8)]
         self.seguidor = Seguidor(kp, ki, kd)
     
-    def update(self, tela):
+    def update(self, tela:pg.Surface):
         roda1 = pg.Vector2(self.roda1.x, self.roda1.y)
         roda2 = pg.Vector2(self.roda2.x, self.roda2.y)
 
@@ -39,7 +39,7 @@ class Carro:
         
         
 
-    def update_sensores(self, fundo):
+    def update_sensores(self, fundo:pg.Surface):
         for i in range(len(self.sensores)):
             sensor_pos = pg.Vector2(self.roda1.x+(10+6*i)*math.cos(self.angulo), (self.roda1.y+(10+6*i)*math.sin(self.angulo)))
             try:
@@ -47,7 +47,7 @@ class Carro:
             except:
                 self.sensores[i] = False
     
-    def render(self, tela, camera):
+    def render(self, tela:pg.Surface, camera):
         pg.draw.line(tela, (100, 120, 100), (self.roda1.x-camera.pos.x, self.roda1.y-camera.pos.y), (self.roda2.x-camera.pos.x, self.roda2.y-camera.pos.y))
         pg.draw.circle(tela, (120, 100, 100), (self.roda1.x-camera.pos.x, self.roda1.y-camera.pos.y), 5)
         pg.draw.circle(tela, (120, 100, 100), (self.roda2.x-camera.pos.x, self.roda2.y-camera.pos.y), 5)
