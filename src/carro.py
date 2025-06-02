@@ -8,9 +8,9 @@ class Carro:
         self.pos = pg.Vector2(x, y)
         self.angulo = 0
         self.roda1 = pg.Vector2(x-30, y)
-        self.vel1 = 0.05
+        self.vel1 = 0.02
         self.roda2 = pg.Vector2(x+30, y)
-        self.vel2 = 0.05
+        self.vel2 = 0.02
         self.sensores = [False for _ in range(8)]
         self.seguidor = Seguidor(kp, ki, kd)
     

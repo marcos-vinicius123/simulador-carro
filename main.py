@@ -34,7 +34,7 @@ def main():
                 
                 if e.key==pg.K_r and evolutivo!=None:
                     evolutivo.gerar_geracao_inicial()
-                    camera.seguir(evolutivo.carros[0].pos)
+                    camera.seguir(evolutivo.carros[0].pos, fundo_img)
 
                 elif e.key==pg.K_1:
                     debug = not debug
@@ -52,8 +52,7 @@ def main():
             elif e.type==pg.MOUSEMOTION:
                 mouse_rel = pg.mouse.get_rel() #se deixar dentro do if gera bugs
                 if e.buttons[0]:
-                    camera.pos.x -= mouse_rel[0]
-                    camera.pos.y -= mouse_rel[1]
+                    camera.mover(-mouse_rel[0], -mouse_rel[1], fundo_img)
             
         tela.fill((0, 0, 0))
         tela.blit(fundo_img, (-camera.pos.x, -camera.pos.y))

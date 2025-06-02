@@ -14,7 +14,7 @@ class Evolutivo:
             carro.update(fundo)
 
     def render(self, tela, camera):
-        for carro in self.get_melhores(config.GERACAO_CARROS_SIZE):
+        for carro in self.get_melhores(10):
             carro.render(tela, camera)
     
     def get_melhores(self, quantidade):
